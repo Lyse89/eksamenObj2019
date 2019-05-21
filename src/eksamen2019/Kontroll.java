@@ -14,7 +14,7 @@ public class Kontroll {
 	
     public void kobleTil() throws Exception {        
     	try {
-                forbindelse = DriverManager.getConnection(databasenavn,"root","OBJ2100");
+                forbindelse = DriverManager.getConnection(databasenavn,"root","surk");
     		} catch(Exception e) {                    
                 throw new Exception("Kan ikke oppnå kontakt med databasen");                        
     		}            
