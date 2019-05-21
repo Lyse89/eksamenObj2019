@@ -3,7 +3,7 @@ package eksamen2019;
 public class DialogStudent {
 
 	public DialogStudent(Main main) {
-		// TODO Auto-generated constructor stub
+		// test
 	}
 
 	public void setVisible(boolean b) {
