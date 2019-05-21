@@ -20,4 +20,13 @@ public class Kontroll {
     		}            
         }
 
+	public static Kontroll getInstance() {
+		return KontrollHolder.INSTANCE;
+	}
+	
+	private static class KontrollHolder {
+
+        private static final Kontroll INSTANCE = new Kontroll();
+    }
+
 }

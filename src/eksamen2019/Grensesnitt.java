@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JButton;
@@ -11,7 +12,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
 public class Grensesnitt extends JFrame {
-
+	private Kontroll kontroll = Kontroll.getInstance();
 	private JPanel contentPane;
 
 	/**
@@ -73,7 +74,7 @@ public class Grensesnitt extends JFrame {
 	
 	public void kobleTil() {
 		try {
-			Kontroll.kobleTil();
+			kontroll.kobleTil();
 			JOptionPane.showMessageDialog(this, "Du er nå koblet til databasen");
 		}catch(Exception e) {JOptionPane.showMessageDialog(this, e.getMessage());}
 	}
