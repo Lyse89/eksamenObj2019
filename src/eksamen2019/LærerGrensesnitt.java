@@ -15,11 +15,11 @@ import javax.swing.JTextField;
 public class LærerGrensesnitt extends JDialog {
 
 	private final JPanel contentPanel = new JPanel();
-	private JTextField textField;
-	private JTextField textField_1;
-	private JTextField textField_2;
-	private JTextField textField_3;
-	private JTextField textField_4;
+	private JTextField textFieldevalueringsnavn;
+	private JTextField textFieldspørsmål;
+	private JTextField textFieldsvar1;
+	private JTextField textFieldsvar2;
+	private JTextField textFieldsvar3;
 
 	/**
 	 * Launch the application.
@@ -52,58 +52,58 @@ public class LærerGrensesnitt extends JDialog {
 		tabbedPane.addTab("Ny Evaluering", null, panel, null);
 		panel.setLayout(null);
 		
-		JLabel lblNewLabel = new JLabel("Kursnavn:");
-		lblNewLabel.setBounds(12, 13, 201, 16);
-		panel.add(lblNewLabel);
+		JLabel lblKursnavn = new JLabel("Kursnavn:");
+		lblKursnavn.setBounds(12, 13, 201, 16);
+		panel.add(lblKursnavn);
 		
-		JComboBox comboBox = new JComboBox();
-		comboBox.setBounds(225, 13, 259, 22);
-		panel.add(comboBox);
+		JComboBox comboBoxkursnavn = new JComboBox();
+		comboBoxkursnavn.setBounds(225, 13, 259, 22);
+		panel.add(comboBoxkursnavn);
 		
 		JLabel lblEvalueringsNavn = new JLabel("Evaluerings navn:");
 		lblEvalueringsNavn.setBounds(12, 42, 201, 16);
 		panel.add(lblEvalueringsNavn);
 		
-		textField = new JTextField();
-		textField.setBounds(225, 42, 259, 22);
-		panel.add(textField);
-		textField.setColumns(10);
+		textFieldevalueringsnavn = new JTextField();
+		textFieldevalueringsnavn.setBounds(225, 42, 259, 22);
+		panel.add(textFieldevalueringsnavn);
+		textFieldevalueringsnavn.setColumns(10);
 		
-		JLabel lblNewLabel_1 = new JLabel("Spørsmål:");
-		lblNewLabel_1.setBounds(12, 71, 201, 16);
-		panel.add(lblNewLabel_1);
+		JLabel lblspørsmål = new JLabel("Spørsmål:");
+		lblspørsmål.setBounds(12, 71, 201, 16);
+		panel.add(lblspørsmål);
 		
-		textField_1 = new JTextField();
-		textField_1.setBounds(225, 71, 259, 22);
-		panel.add(textField_1);
-		textField_1.setColumns(10);
+		textFieldspørsmål = new JTextField();
+		textFieldspørsmål.setBounds(225, 71, 259, 22);
+		panel.add(textFieldspørsmål);
+		textFieldspørsmål.setColumns(10);
 		
-		textField_2 = new JTextField();
-		textField_2.setColumns(10);
-		textField_2.setBounds(225, 103, 259, 22);
-		panel.add(textField_2);
+		textFieldsvar1 = new JTextField();
+		textFieldsvar1.setColumns(10);
+		textFieldsvar1.setBounds(225, 103, 259, 22);
+		panel.add(textFieldsvar1);
 		
-		JLabel label = new JLabel("Svaralternativ 1:");
-		label.setBounds(12, 103, 201, 16);
-		panel.add(label);
+		JLabel lblsvar1 = new JLabel("Svaralternativ 1:");
+		lblsvar1.setBounds(12, 103, 201, 16);
+		panel.add(lblsvar1);
 		
-		textField_3 = new JTextField();
-		textField_3.setColumns(10);
-		textField_3.setBounds(225, 138, 259, 22);
-		panel.add(textField_3);
+		textFieldsvar2 = new JTextField();
+		textFieldsvar2.setColumns(10);
+		textFieldsvar2.setBounds(225, 138, 259, 22);
+		panel.add(textFieldsvar2);
 		
-		JLabel label_1 = new JLabel("Svaralternativ 2:");
-		label_1.setBounds(12, 138, 201, 16);
-		panel.add(label_1);
+		JLabel lblsvar2 = new JLabel("Svaralternativ 2:");
+		lblsvar2.setBounds(12, 138, 201, 16);
+		panel.add(lblsvar2);
 		
-		textField_4 = new JTextField();
-		textField_4.setColumns(10);
-		textField_4.setBounds(225, 173, 259, 22);
-		panel.add(textField_4);
+		textFieldsvar3 = new JTextField();
+		textFieldsvar3.setColumns(10);
+		textFieldsvar3.setBounds(225, 173, 259, 22);
+		panel.add(textFieldsvar3);
 		
-		JLabel label_2 = new JLabel("Svaralternativ 3:");
-		label_2.setBounds(12, 173, 201, 16);
-		panel.add(label_2);
+		JLabel lblsvar3 = new JLabel("Svaralternativ 3:");
+		lblsvar3.setBounds(12, 173, 201, 16);
+		panel.add(lblsvar3);
 		
 		JPanel panel_1 = new JPanel();
 		tabbedPane.addTab("Rapport", null, panel_1, null);

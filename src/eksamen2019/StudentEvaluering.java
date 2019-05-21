@@ -12,6 +12,7 @@ import javax.swing.JComboBox;
 import java.awt.Font;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import javax.swing.border.TitledBorder;
 
 public class StudentEvaluering extends JDialog {
 
@@ -34,42 +35,45 @@ public class StudentEvaluering extends JDialog {
 	 * Create the dialog.
 	 */
 	public StudentEvaluering() {
-		setBounds(100, 100, 450, 300);
+		setBounds(100, 100, 450, 181);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
 		contentPanel.setLayout(null);
+		
+		JPanel panel = new JPanel();
+		panel.setBorder(new TitledBorder(null, "Valg av spørreskjema", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		panel.setBounds(4, 13, 420, 101);
+		contentPanel.add(panel);
+		panel.setLayout(null);
 		{
 			JLabel lblEvalueringsnavn = new JLabel("Evalueringsnavn:");
-			lblEvalueringsnavn.setBounds(12, 71, 118, 16);
-			contentPanel.add(lblEvalueringsnavn);
+			lblEvalueringsnavn.setBounds(6, 19, 118, 16);
+			panel.add(lblEvalueringsnavn);
 		}
 		
 		JComboBox Studentevalueringdropdown = new JComboBox();
-		Studentevalueringdropdown.setBounds(142, 68, 278, 22);
-		contentPanel.add(Studentevalueringdropdown);
+		Studentevalueringdropdown.setBounds(136, 16, 278, 22);
+		panel.add(Studentevalueringdropdown);
 		
 		JButton startevalueringbutton = new JButton("Start");
+		startevalueringbutton.setBounds(317, 65, 97, 25);
+		panel.add(startevalueringbutton);
 		startevalueringbutton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				StudentEvalueringStartet newWindow = new StudentEvalueringStartet();
 				newWindow.setVisible(true);
+				dispose();
 			}
 		});
-		startevalueringbutton.setBounds(323, 103, 97, 25);
-		contentPanel.add(startevalueringbutton);
-		
-		JLabel LabelStudentEvaluering = new JLabel("Utf\u00F8r en evaluering");
-		LabelStudentEvaluering.setFont(new Font("Tahoma", Font.PLAIN, 23));
-		LabelStudentEvaluering.setBounds(12, 13, 408, 25);
-		contentPanel.add(LabelStudentEvaluering);
 		
 		JButton StudentEvalueringTilbakeKnapp = new JButton("Tilbake");
+		StudentEvalueringTilbakeKnapp.setBounds(207, 65, 97, 25);
+		panel.add(StudentEvalueringTilbakeKnapp);
 		StudentEvalueringTilbakeKnapp.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				dispose();
 			}
 		});
-		StudentEvalueringTilbakeKnapp.setBounds(214, 103, 97, 25);
-		contentPanel.add(StudentEvalueringTilbakeKnapp);
 	}
 }
