@@ -1,12 +1,13 @@
 package eksamen2019;
 
 import java.sql.Connection;
+import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
 
 public class Kontroll {
 	
-	private String databasenavn = "jdbc:mysql://localhost:3306/kurs";
+	private String databasenavn = "jdbc:mysql://localhost:3306/kurs?serverTimezone=UTC";
     private String databasedriver = "com.mysql.jdbc.Driver";
     private Connection forbindelse;
     private ResultSet resultat;
@@ -14,10 +15,9 @@ public class Kontroll {
 	
     public void kobleTil() throws Exception {        
     	try {
-                forbindelse = DriverManager.getConnection(databasenavn,"root","surk");
-    		} catch(Exception e) {                    
-                throw new Exception("Kan ikke oppnå kontakt med databasen");                        
-    		}            
+                forbindelse = DriverManager.getConnection(databasenavn,"Kurs","Surk");
+    		}catch(Exception e) {throw new Exception("Kan ikke oppnå kontakt med databasen");
+    		}                        	            
         }
 
 	public static Kontroll getInstance() {

@@ -59,20 +59,20 @@ public class StudentEvalueringStartet extends JDialog {
 		lblSprsml.setBounds(10, 21, 394, 24);
 		panel.add(lblSprsml);
 		
-		JRadioButton radioButton = new JRadioButton("Svar alternativ 1");
-		buttonGroup.add(radioButton);
-		radioButton.setBounds(79, 52, 127, 25);
-		panel.add(radioButton);
+		JRadioButton radioButtonsvar1 = new JRadioButton("Svar alternativ 1");
+		buttonGroup.add(radioButtonsvar1);
+		radioButtonsvar1.setBounds(79, 52, 127, 25);
+		panel.add(radioButtonsvar1);
 		
-		JRadioButton rdbtnNewRadioButton = new JRadioButton("Svar alternativ 2");
-		buttonGroup.add(rdbtnNewRadioButton);
-		rdbtnNewRadioButton.setBounds(79, 80, 127, 25);
-		panel.add(rdbtnNewRadioButton);
+		JRadioButton radioButtonsvar2 = new JRadioButton("Svar alternativ 2");
+		buttonGroup.add(radioButtonsvar2);
+		radioButtonsvar2.setBounds(79, 80, 127, 25);
+		panel.add(radioButtonsvar2);
 		
-		JRadioButton rdbtnNewRadioButton_1 = new JRadioButton("Svar alternativ 3");
-		buttonGroup.add(rdbtnNewRadioButton_1);
-		rdbtnNewRadioButton_1.setBounds(79, 108, 127, 25);
-		panel.add(rdbtnNewRadioButton_1);
+		JRadioButton radioButtonsvar3 = new JRadioButton("Svar alternativ 3");
+		buttonGroup.add(radioButtonsvar3);
+		radioButtonsvar3.setBounds(79, 108, 127, 25);
+		panel.add(radioButtonsvar3);
 		
 		JButton btnAvbryt = new JButton("Avbryt");
 		btnAvbryt.addActionListener(new ActionListener() {

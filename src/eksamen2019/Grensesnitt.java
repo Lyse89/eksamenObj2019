@@ -14,6 +14,10 @@ import javax.swing.JLabel;
 import java.awt.Font;
 
 public class Grensesnitt extends JFrame {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private Kontroll kontroll = Kontroll.getInstance();
 	private JPanel contentPane;
 
@@ -47,8 +51,12 @@ public class Grensesnitt extends JFrame {
 		JButton Hovedmenylærerknapp = new JButton("Lærer");
 		Hovedmenylærerknapp.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				LærerGrensesnitt newWindow = new LærerGrensesnitt();
-				newWindow.setVisible(true);
+				try{
+					kontroll.kobleTil();
+					JOptionPane.showMessageDialog(null, "Database forbindelse oprettet");
+					LærerGrensesnitt newWindow = new LærerGrensesnitt();
+					newWindow.setVisible(true);
+				}catch (Exception e1) {JOptionPane.showMessageDialog(null, e1.getMessage());}
 			}
 		});
 		Hovedmenylærerknapp.setBounds(83, 56, 353, 25);
@@ -57,9 +65,12 @@ public class Grensesnitt extends JFrame {
 		JButton Hovedmenystudentknapp = new JButton("Student");
 		Hovedmenystudentknapp.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				StudentGrensesnitt newWindow = new StudentGrensesnitt();
-				newWindow.setVisible(true);
-				kobleTil();
+				try{
+					kontroll.kobleTil();
+					JOptionPane.showMessageDialog(null, "Database forbindelse oprettet");
+					StudentGrensesnitt newWindow = new StudentGrensesnitt();
+					newWindow.setVisible(true);
+				}catch (Exception e1) {JOptionPane.showMessageDialog(null, e1.getMessage());}
 			}
 		});
 		Hovedmenystudentknapp.setBounds(83, 95, 353, 25);
@@ -80,10 +91,4 @@ public class Grensesnitt extends JFrame {
 		contentPane.add(lblEvalueringAvKurs);
 	}
 	
-	public void kobleTil() {
-		try {
-			kontroll.kobleTil();
-			JOptionPane.showMessageDialog(this, "Du er nå koblet til databasen");
-		}catch(Exception e) {JOptionPane.showMessageDialog(this, e.getMessage());}
-	}
 }
