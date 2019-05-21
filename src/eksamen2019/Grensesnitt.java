@@ -56,6 +56,7 @@ public class Grensesnitt extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				StudentGrensesnitt newWindow = new StudentGrensesnitt();
 				newWindow.setVisible(true);
+				kobleTil();
 			}
 		});
 		Hovedmenystudentknapp.setBounds(92, 121, 353, 25);
@@ -68,5 +69,12 @@ public class Grensesnitt extends JFrame {
 		});
 		Hovedmenyavsluttknapp.setBounds(221, 159, 97, 25);
 		contentPane.add(Hovedmenyavsluttknapp);
+	}
+	
+	public void kobleTil() {
+		try {
+			Kontroll.kobleTil();
+			JOptionPane.showMessageDialog(this, "Du er nå koblet til databasen");
+		}catch(Exception e) {JOptionPane.showMessageDialog(this, e.getMessage());}
 	}
 }
