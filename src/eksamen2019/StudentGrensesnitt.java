@@ -15,7 +15,7 @@ import java.awt.event.ActionEvent;
 import javax.swing.border.TitledBorder;
 
 public class StudentGrensesnitt extends JDialog {
-
+	private Kontroll kontroll = Kontroll.getInstance();
 	private final JPanel contentPanel = new JPanel();
 	private JTextField Brukernavnlogintextfield;
 	private JTextField Passordlogintextfield;

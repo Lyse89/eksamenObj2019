@@ -11,12 +11,16 @@ import javax.swing.JLabel;
 import javax.swing.JComboBox;
 import java.awt.Font;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.sql.ResultSet;
 import java.awt.event.ActionEvent;
 import javax.swing.border.TitledBorder;
 
 public class StudentEvaluering extends JDialog {
-
+	private Kontroll kontroll = Kontroll.getInstance();
 	private final JPanel contentPanel = new JPanel();
+	JComboBox Studentevalueringdropdown = new JComboBox();
 
 	/**
 	 * Launch the application.
@@ -35,6 +39,15 @@ public class StudentEvaluering extends JDialog {
 	 * Create the dialog.
 	 */
 	public StudentEvaluering() {
+		addWindowListener(new WindowAdapter() {
+			public void windowOpened(WindowEvent arg0) {
+				try {
+					laglistecombobox();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
 		setBounds(100, 100, 450, 181);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -52,7 +65,7 @@ public class StudentEvaluering extends JDialog {
 			panel.add(lblEvalueringsnavn);
 		}
 		
-		JComboBox Studentevalueringdropdown = new JComboBox();
+		
 		Studentevalueringdropdown.setBounds(136, 16, 278, 22);
 		panel.add(Studentevalueringdropdown);
 		
@@ -75,5 +88,18 @@ public class StudentEvaluering extends JDialog {
 				dispose();
 			}
 		});
+	}
+	
+	private Object laglistecombobox() throws Exception {
+		ResultSet evaluering = kontroll.hentEvaluering();
+		try {
+			while(evaluering.next()) {
+			String EvalueringsNavn = evaluering.getString(1);
+			Studentevalueringdropdown.addItem(EvalueringsNavn);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	return evaluering;
 	}
 }

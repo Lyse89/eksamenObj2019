@@ -56,6 +56,7 @@ public class Grensesnitt extends JFrame {
 					JOptionPane.showMessageDialog(null, "Database forbindelse oprettet");
 					LærerGrensesnitt newWindow = new LærerGrensesnitt();
 					newWindow.setVisible(true);
+					
 				}catch (Exception e1) {JOptionPane.showMessageDialog(null, e1.getMessage());}
 			}
 		});

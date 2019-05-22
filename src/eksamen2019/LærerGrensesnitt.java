@@ -1,14 +1,13 @@
 package eksamen2019;
-
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
-
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JTabbedPane;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JComboBox;
 import javax.swing.JTextField;
 import javax.swing.JTable;
@@ -16,19 +15,26 @@ import javax.swing.border.TitledBorder;
 import javax.swing.JScrollPane;
 import javax.swing.table.DefaultTableModel;
 import java.awt.event.ActionListener;
+import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 import java.awt.event.ActionEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 public class LærerGrensesnitt extends JDialog {
-
+	private Kontroll kontroll = Kontroll.getInstance();
 	private final JPanel contentPanel = new JPanel();
 	private JTextField textFieldevalueringsnavn;
 	private JTextField textFieldspørsmål;
 	private JTextField textFieldsvar1;
 	private JTextField textFieldsvar2;
 	private JTextField textFieldsvar3;
+	private JTextField textFieldsvar4;
+	private JTextField textFieldsvar5;
 	private JTable table;
+	JComboBox comboBoxkursnavn = new JComboBox();
+
 	
 
 	/**
@@ -48,6 +54,15 @@ public class LærerGrensesnitt extends JDialog {
 	 * Create the dialog.
 	 */
 	public LærerGrensesnitt() {
+		addWindowListener(new WindowAdapter() {
+			public void windowOpened(WindowEvent arg0) {
+				try {
+					laglistecombobox();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
 		setBounds(100, 100, 688, 621);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -64,7 +79,7 @@ public class LærerGrensesnitt extends JDialog {
 		
 		JPanel panel_2 = new JPanel();
 		panel_2.setBorder(new TitledBorder(null, "Oppretting av spørreundersøkelse", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		panel_2.setBounds(24, 17, 622, 239);
+		panel_2.setBounds(24, 17, 622, 290);
 		panel.add(panel_2);
 		panel_2.setLayout(null);
 		
@@ -72,9 +87,13 @@ public class LærerGrensesnitt extends JDialog {
 		lblKursnavn.setBounds(10, 21, 165, 16);
 		panel_2.add(lblKursnavn);
 		
-		JComboBox comboBoxkursnavn = new JComboBox();
+		
+		
 		comboBoxkursnavn.setBounds(185, 18, 393, 22);
 		panel_2.add(comboBoxkursnavn);
+		
+
+		
 		
 		JLabel lblEvalueringsNavn = new JLabel("Evaluerings navn:");
 		lblEvalueringsNavn.setBounds(10, 48, 165, 16);
@@ -124,10 +143,9 @@ public class LærerGrensesnitt extends JDialog {
 		JButton btnNesteSprml = new JButton("Neste spørsmål");
 		btnNesteSprml.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				nyttSporsmal();
 			}
 		});
-		btnNesteSprml.setBounds(438, 205, 140, 23);
+		btnNesteSprml.setBounds(438, 254, 140, 23);
 		panel_2.add(btnNesteSprml);
 		
 		JButton btnAvbryt = new JButton("Avbryt");
@@ -136,11 +154,29 @@ public class LærerGrensesnitt extends JDialog {
 				dispose();
 			}
 		});
-		btnAvbryt.setBounds(288, 205, 140, 23);
+		btnAvbryt.setBounds(286, 254, 140, 23);
 		panel_2.add(btnAvbryt);
 		
+		JLabel lblsvar4 = new JLabel("Svaralternativ 4:");
+		lblsvar4.setBounds(10, 185, 165, 16);
+		panel_2.add(lblsvar4);
+		
+		textFieldsvar4 = new JTextField();
+		textFieldsvar4.setBounds(185, 182, 393, 22);
+		panel_2.add(textFieldsvar4);
+		textFieldsvar4.setColumns(10);
+		
+		JLabel lblsvar5 = new JLabel("Svaralternativ 5:");
+		lblsvar5.setBounds(12, 214, 163, 16);
+		panel_2.add(lblsvar5);
+		
+		textFieldsvar5 = new JTextField();
+		textFieldsvar5.setBounds(185, 211, 393, 22);
+		panel_2.add(textFieldsvar5);
+		textFieldsvar5.setColumns(10);
+		
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(24, 310, 622, 214);
+		scrollPane.setBounds(24, 347, 622, 151);
 		panel.add(scrollPane);
 		
 		table = new JTable();
@@ -159,8 +195,12 @@ public class LærerGrensesnitt extends JDialog {
 		scrollPane.setViewportView(table);
 		
 		JLabel lblDineSprsmlS = new JLabel("Dine sp\u00F8rsm\u00E5l s\u00E5 langt:");
-		lblDineSprsmlS.setBounds(24, 285, 137, 14);
+		lblDineSprsmlS.setBounds(24, 320, 137, 14);
 		panel.add(lblDineSprsmlS);
+		
+		JButton btnLagSprreunderskelse = new JButton("Ferdig");
+		btnLagSprreunderskelse.setBounds(460, 506, 186, 25);
+		panel.add(btnLagSprreunderskelse);
 		
 		JPanel panel_1 = new JPanel();
 		tabbedPane.addTab("Rapport", null, panel_1, null);
@@ -170,14 +210,31 @@ public class LærerGrensesnitt extends JDialog {
 		}
 	}
 	
-
-	private void nyttSporsmal() {
-		combobox.get();
+	private Object laglistecombobox() throws Exception {
+		ResultSet kurs = kontroll.hentKurs();
+		try {
+			while(kurs.next()) {
+			String KursNavn = kurs.getString(1);
+			comboBoxkursnavn.addItem(KursNavn);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	return kurs;
+	}
+	
+	
+	private void nyttSporsmal() throws Exception {
 		String evuNavn = textFieldevalueringsnavn.getText();
 		String sporsmal = textFieldspørsmål.getText();
 		String alt1 = textFieldsvar1.getText();
 		String alt2 = textFieldsvar2.getText();
 		String alt3 = textFieldsvar3.getText();
 		Grensesnitt.regSpormal(evuNavn, sporsmal, alt1, alt2, alt3);
+	}
+
+	public static LærerGrensesnitt getInstance() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

@@ -17,7 +17,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
 public class StudentEvalueringStartet extends JDialog {
-
+	private Kontroll kontroll = Kontroll.getInstance();
 	private final JPanel contentPanel = new JPanel();
 	private final ButtonGroup buttonGroup = new ButtonGroup();
 	
@@ -39,7 +39,7 @@ public class StudentEvalueringStartet extends JDialog {
 	 * Create the dialog.
 	 */
 	public StudentEvalueringStartet() {
-		setBounds(100, 100, 450, 237);
+		setBounds(100, 100, 450, 330);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
@@ -47,7 +47,7 @@ public class StudentEvalueringStartet extends JDialog {
 		
 		JPanel panel = new JPanel();
 		panel.setBorder(new TitledBorder(null, "Spørreskjema", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		panel.setBounds(10, 11, 420, 176);
+		panel.setBounds(10, 11, 420, 259);
 		contentPanel.add(panel);
 		panel.setLayout(null);
 		
@@ -80,7 +80,7 @@ public class StudentEvalueringStartet extends JDialog {
 				dispose();
 			}
 		});
-		btnAvbryt.setBounds(216, 140, 97, 25);
+		btnAvbryt.setBounds(307, 221, 97, 25);
 		panel.add(btnAvbryt);
 		
 		JButton btnNesteSprsml = new JButton("Neste Sp\u00F8rsm\u00E5l");
@@ -88,8 +88,18 @@ public class StudentEvalueringStartet extends JDialog {
 			public void actionPerformed(ActionEvent e) {
 			}
 		});
-		btnNesteSprsml.setBounds(79, 140, 127, 25);
+		btnNesteSprsml.setBounds(170, 221, 127, 25);
 		panel.add(btnNesteSprsml);
+		
+		JRadioButton rdbtnSvarAlternativ = new JRadioButton("Svar alternativ 4");
+		buttonGroup.add(rdbtnSvarAlternativ);
+		rdbtnSvarAlternativ.setBounds(79, 138, 127, 25);
+		panel.add(rdbtnSvarAlternativ);
+		
+		JRadioButton rdbtnSvarAlternativ_1 = new JRadioButton("Svar alternativ 5");
+		buttonGroup.add(rdbtnSvarAlternativ_1);
+		rdbtnSvarAlternativ_1.setBounds(79, 168, 127, 25);
+		panel.add(rdbtnSvarAlternativ_1);
 
 	}
 }
