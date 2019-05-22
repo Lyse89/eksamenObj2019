@@ -29,4 +29,9 @@ public class Kontroll {
         private static final Kontroll INSTANCE = new Kontroll();
     }
 
+	public void nyttSporsmal(String evuNavn, String sporsmal, String alt1, String alt2, String alt3) {
+		String sqlSetning = 
+		
+	}
+
 }
