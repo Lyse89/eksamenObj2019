@@ -90,5 +90,10 @@ public class Grensesnitt extends JFrame {
 		lblEvalueringAvKurs.setBounds(185, 11, 173, 34);
 		contentPane.add(lblEvalueringAvKurs);
 	}
+
+	public static void regSpormal(String evuNavn, String sporsmal, String alt1, String alt2, String alt3) {
+		// TODO Auto-generated method stub
+		
+	}
 	
 }

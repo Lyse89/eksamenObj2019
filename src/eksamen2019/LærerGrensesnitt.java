@@ -16,6 +16,8 @@ import javax.swing.border.TitledBorder;
 import javax.swing.JScrollPane;
 import javax.swing.table.DefaultTableModel;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.List;
 import java.awt.event.ActionEvent;
 
 public class LærerGrensesnitt extends JDialog {
@@ -27,6 +29,7 @@ public class LærerGrensesnitt extends JDialog {
 	private JTextField textFieldsvar2;
 	private JTextField textFieldsvar3;
 	private JTable table;
+	
 
 	/**
 	 * Launch the application.
@@ -118,9 +121,10 @@ public class LærerGrensesnitt extends JDialog {
 		lblsvar3.setBounds(10, 156, 165, 16);
 		panel_2.add(lblsvar3);
 		
-		JButton btnNesteSprml = new JButton("Neste sp\u00F8rm\u00E5l");
+		JButton btnNesteSprml = new JButton("Neste spørsmål");
 		btnNesteSprml.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				nyttSporsmal();
 			}
 		});
 		btnNesteSprml.setBounds(438, 205, 140, 23);
@@ -164,5 +168,16 @@ public class LærerGrensesnitt extends JDialog {
 		{
 
 		}
+	}
+	
+
+	private void nyttSporsmal() {
+		combobox.get();
+		String evuNavn = textFieldevalueringsnavn.getText();
+		String sporsmal = textFieldspørsmål.getText();
+		String alt1 = textFieldsvar1.getText();
+		String alt2 = textFieldsvar2.getText();
+		String alt3 = textFieldsvar3.getText();
+		Grensesnitt.regSpormal(evuNavn, sporsmal, alt1, alt2, alt3);
 	}
 }
