@@ -2,6 +2,7 @@ package eksamen2019;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 
@@ -29,9 +30,46 @@ public class Kontroll {
         private static final Kontroll INSTANCE = new Kontroll();
     }
 
-	public void nyttSporsmal(String evuNavn, String sporsmal, String alt1, String alt2, String alt3) {
-		String sqlSetning = 
+	public void nyttSporsmal(int antSp, String evuNavn, String sporsmal, String alt1, String alt2, String alt3) throws Exception {
+		if (antSp==1) { 
+			try {
+				
+				String sqlSetning = "INSERT INTO tblevaluering VALUES";
+				}catch(Exception e){
+				throw new Exception("kan ikke utføre spørringen");
+				} //catch     
+		} else if (antSp>1) {
+			try {
+				String sqlSetning = "";
+				}catch(Exception e){
+				throw new Exception("kan ikke utføre spørringen");
+				} //catch   
+		}
 		
+	}
+
+	public ResultSet getKursID(String kursNavn) throws Exception {
+		resultat = null;
+		PreparedStatement ps = null;
+		String sqlSetning = "SELECT kursID FROM tblkurs WHERE kursNavn = ?;";
+		try {
+    		ps = forbindelse.prepareStatement(sqlSetning);
+    		ps.setString(1, (kursNavn));
+    		resultat = (ResultSet)ps.executeQuery();
+    	}catch(Exception e) {throw new Exception("Finner ikke kurset");}
+    	return resultat;
+	}
+
+	public ResultSet getSpmEvalID(String sporsmal) throws Exception {
+		resultat = null;
+		PreparedStatement ps = null;
+		String sqlSetning = "SELECT evalID FROM tblevaluering WHERE evalNavn = ?;";
+		try {
+    		ps = forbindelse.prepareStatement(sqlSetning);
+    		ps.setString(1, (sporsmal));
+    		resultat = (ResultSet)ps.executeQuery();
+    	}catch(Exception e) {throw new Exception("Finner ikke kurset");}
+    	return resultat;
 	}
 
 }
