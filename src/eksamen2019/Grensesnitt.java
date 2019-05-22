@@ -9,6 +9,7 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.sql.ResultSet;
 import java.awt.event.ActionEvent;
 import javax.swing.JLabel;
 import java.awt.Font;
@@ -92,8 +93,13 @@ public class Grensesnitt extends JFrame {
 		contentPane.add(lblEvalueringAvKurs);
 	}
 
-	public static void regSpormal(String evuNavn, String sporsmal, String alt1, String alt2, String alt3) {
-		// TODO Auto-generated method stub
+	public void regSpormal(String evuNavn, String sporsmal, String alt1, String alt2, String alt3) {
+		try {
+			ResultSet kursID = kontroll.getKursID(kursNavn);
+			ResultSet evalID = kontroll.getEvalID(evuNavn);
+			ResultSet spmID = kontroll.getSpmID(sporsmal);
+			kontroll.nyttSporsmal(kursID, sporsmal, alt1, alt2, alt3);
+		}catch(Exception e) {JOptionPane.showMessageDialog(this, e.getMessage());}
 		
 	}
 	
