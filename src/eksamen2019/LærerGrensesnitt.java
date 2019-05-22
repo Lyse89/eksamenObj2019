@@ -34,6 +34,8 @@ public class LærerGrensesnitt extends JDialog {
 	private JTextField textFieldsvar5;
 	private JTable table;
 	JComboBox comboBoxkursnavn = new JComboBox();
+	private JTextField textField;
+	private JTextField textField_1;
 
 	
 
@@ -63,14 +65,14 @@ public class LærerGrensesnitt extends JDialog {
 				}
 			}
 		});
-		setBounds(100, 100, 688, 621);
+		setBounds(100, 100, 688, 711);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
 		contentPanel.setLayout(null);
 		
 		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
-		tabbedPane.setBounds(0, 0, 672, 574);
+		tabbedPane.setBounds(0, 0, 672, 664);
 		contentPanel.add(tabbedPane);
 		
 		JPanel panel = new JPanel();
@@ -79,7 +81,7 @@ public class LærerGrensesnitt extends JDialog {
 		
 		JPanel panel_2 = new JPanel();
 		panel_2.setBorder(new TitledBorder(null, "Oppretting av spørreundersøkelse", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		panel_2.setBounds(24, 17, 622, 290);
+		panel_2.setBounds(24, 17, 622, 355);
 		panel.add(panel_2);
 		panel_2.setLayout(null);
 		
@@ -105,39 +107,39 @@ public class LærerGrensesnitt extends JDialog {
 		textFieldevalueringsnavn.setColumns(10);
 		
 		JLabel lblspørsmål = new JLabel("Spørsmål:");
-		lblspørsmål.setBounds(10, 75, 165, 16);
+		lblspørsmål.setBounds(10, 141, 165, 16);
 		panel_2.add(lblspørsmål);
 		
 		textFieldspørsmål = new JTextField();
-		textFieldspørsmål.setBounds(185, 72, 393, 22);
+		textFieldspørsmål.setBounds(185, 138, 393, 22);
 		panel_2.add(textFieldspørsmål);
 		textFieldspørsmål.setColumns(10);
 		
 		textFieldsvar1 = new JTextField();
-		textFieldsvar1.setBounds(185, 99, 393, 22);
+		textFieldsvar1.setBounds(185, 164, 393, 22);
 		panel_2.add(textFieldsvar1);
 		textFieldsvar1.setColumns(10);
 		
 		JLabel lblsvar1 = new JLabel("Svaralternativ 1:");
-		lblsvar1.setBounds(10, 102, 165, 16);
+		lblsvar1.setBounds(10, 167, 165, 16);
 		panel_2.add(lblsvar1);
 		
 		textFieldsvar2 = new JTextField();
-		textFieldsvar2.setBounds(185, 126, 393, 22);
+		textFieldsvar2.setBounds(185, 191, 393, 22);
 		panel_2.add(textFieldsvar2);
 		textFieldsvar2.setColumns(10);
 		
 		JLabel lblsvar2 = new JLabel("Svaralternativ 2:");
-		lblsvar2.setBounds(10, 129, 165, 16);
+		lblsvar2.setBounds(10, 194, 165, 16);
 		panel_2.add(lblsvar2);
 		
 		textFieldsvar3 = new JTextField();
-		textFieldsvar3.setBounds(185, 153, 393, 22);
+		textFieldsvar3.setBounds(185, 218, 393, 22);
 		panel_2.add(textFieldsvar3);
 		textFieldsvar3.setColumns(10);
 		
 		JLabel lblsvar3 = new JLabel("Svaralternativ 3:");
-		lblsvar3.setBounds(10, 156, 165, 16);
+		lblsvar3.setBounds(10, 221, 165, 16);
 		panel_2.add(lblsvar3);
 		
 		JButton btnNesteSprml = new JButton("Neste spørsmål");
@@ -145,7 +147,7 @@ public class LærerGrensesnitt extends JDialog {
 			public void actionPerformed(ActionEvent e) {
 			}
 		});
-		btnNesteSprml.setBounds(438, 254, 140, 23);
+		btnNesteSprml.setBounds(438, 319, 140, 23);
 		panel_2.add(btnNesteSprml);
 		
 		JButton btnAvbryt = new JButton("Avbryt");
@@ -154,29 +156,43 @@ public class LærerGrensesnitt extends JDialog {
 				dispose();
 			}
 		});
-		btnAvbryt.setBounds(286, 254, 140, 23);
+		btnAvbryt.setBounds(286, 319, 140, 23);
 		panel_2.add(btnAvbryt);
 		
 		JLabel lblsvar4 = new JLabel("Svaralternativ 4:");
-		lblsvar4.setBounds(10, 185, 165, 16);
+		lblsvar4.setBounds(10, 250, 165, 16);
 		panel_2.add(lblsvar4);
 		
 		textFieldsvar4 = new JTextField();
-		textFieldsvar4.setBounds(185, 182, 393, 22);
+		textFieldsvar4.setBounds(185, 247, 393, 22);
 		panel_2.add(textFieldsvar4);
 		textFieldsvar4.setColumns(10);
 		
 		JLabel lblsvar5 = new JLabel("Svaralternativ 5:");
-		lblsvar5.setBounds(12, 214, 163, 16);
+		lblsvar5.setBounds(12, 279, 163, 16);
 		panel_2.add(lblsvar5);
 		
 		textFieldsvar5 = new JTextField();
-		textFieldsvar5.setBounds(185, 211, 393, 22);
+		textFieldsvar5.setBounds(185, 276, 393, 22);
 		panel_2.add(textFieldsvar5);
 		textFieldsvar5.setColumns(10);
 		
+		JLabel lblStartDato = new JLabel("Start og slutt dato:");
+		lblStartDato.setBounds(10, 80, 119, 16);
+		panel_2.add(lblStartDato);
+		
+		textField = new JTextField();
+		textField.setBounds(185, 77, 192, 22);
+		panel_2.add(textField);
+		textField.setColumns(10);
+		
+		textField_1 = new JTextField();
+		textField_1.setBounds(389, 77, 189, 22);
+		panel_2.add(textField_1);
+		textField_1.setColumns(10);
+		
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(24, 347, 622, 151);
+		scrollPane.setBounds(24, 437, 622, 151);
 		panel.add(scrollPane);
 		
 		table = new JTable();
@@ -195,11 +211,11 @@ public class LærerGrensesnitt extends JDialog {
 		scrollPane.setViewportView(table);
 		
 		JLabel lblDineSprsmlS = new JLabel("Dine sp\u00F8rsm\u00E5l s\u00E5 langt:");
-		lblDineSprsmlS.setBounds(24, 320, 137, 14);
+		lblDineSprsmlS.setBounds(24, 410, 137, 14);
 		panel.add(lblDineSprsmlS);
 		
 		JButton btnLagSprreunderskelse = new JButton("Ferdig");
-		btnLagSprreunderskelse.setBounds(460, 506, 186, 25);
+		btnLagSprreunderskelse.setBounds(460, 596, 186, 25);
 		panel.add(btnLagSprreunderskelse);
 		
 		JPanel panel_1 = new JPanel();
