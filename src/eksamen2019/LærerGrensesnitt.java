@@ -86,12 +86,12 @@ public class LærerGrensesnitt extends JDialog {
 		panel_2.setLayout(null);
 		
 		JLabel lblKursnavn = new JLabel("Kursnavn:");
-		lblKursnavn.setBounds(10, 21, 165, 16);
+		lblKursnavn.setBounds(10, 24, 165, 16);
 		panel_2.add(lblKursnavn);
 		
 		
 		
-		comboBoxkursnavn.setBounds(185, 18, 393, 22);
+		comboBoxkursnavn.setBounds(217, 21, 393, 22);
 		panel_2.add(comboBoxkursnavn);
 		
 
@@ -102,44 +102,44 @@ public class LærerGrensesnitt extends JDialog {
 		panel_2.add(lblEvalueringsNavn);
 		
 		textFieldevalueringsnavn = new JTextField();
-		textFieldevalueringsnavn.setBounds(185, 45, 393, 22);
+		textFieldevalueringsnavn.setBounds(217, 48, 393, 22);
 		panel_2.add(textFieldevalueringsnavn);
 		textFieldevalueringsnavn.setColumns(10);
 		
 		JLabel lblspørsmål = new JLabel("Spørsmål:");
-		lblspørsmål.setBounds(10, 141, 165, 16);
+		lblspørsmål.setBounds(10, 122, 165, 16);
 		panel_2.add(lblspørsmål);
 		
 		textFieldspørsmål = new JTextField();
-		textFieldspørsmål.setBounds(185, 138, 393, 22);
+		textFieldspørsmål.setBounds(217, 119, 393, 22);
 		panel_2.add(textFieldspørsmål);
 		textFieldspørsmål.setColumns(10);
 		
 		textFieldsvar1 = new JTextField();
-		textFieldsvar1.setBounds(185, 164, 393, 22);
+		textFieldsvar1.setBounds(217, 145, 393, 22);
 		panel_2.add(textFieldsvar1);
 		textFieldsvar1.setColumns(10);
 		
 		JLabel lblsvar1 = new JLabel("Svaralternativ 1:");
-		lblsvar1.setBounds(10, 167, 165, 16);
+		lblsvar1.setBounds(10, 148, 165, 16);
 		panel_2.add(lblsvar1);
 		
 		textFieldsvar2 = new JTextField();
-		textFieldsvar2.setBounds(185, 191, 393, 22);
+		textFieldsvar2.setBounds(217, 172, 393, 22);
 		panel_2.add(textFieldsvar2);
 		textFieldsvar2.setColumns(10);
 		
 		JLabel lblsvar2 = new JLabel("Svaralternativ 2:");
-		lblsvar2.setBounds(10, 194, 165, 16);
+		lblsvar2.setBounds(10, 175, 165, 16);
 		panel_2.add(lblsvar2);
 		
 		textFieldsvar3 = new JTextField();
-		textFieldsvar3.setBounds(185, 218, 393, 22);
+		textFieldsvar3.setBounds(217, 199, 393, 22);
 		panel_2.add(textFieldsvar3);
 		textFieldsvar3.setColumns(10);
 		
 		JLabel lblsvar3 = new JLabel("Svaralternativ 3:");
-		lblsvar3.setBounds(10, 221, 165, 16);
+		lblsvar3.setBounds(10, 202, 165, 16);
 		panel_2.add(lblsvar3);
 		
 		JButton btnNesteSprml = new JButton("Neste spørsmål");
@@ -147,7 +147,7 @@ public class LærerGrensesnitt extends JDialog {
 			public void actionPerformed(ActionEvent e) {
 			}
 		});
-		btnNesteSprml.setBounds(438, 319, 140, 23);
+		btnNesteSprml.setBounds(470, 292, 140, 23);
 		panel_2.add(btnNesteSprml);
 		
 		JButton btnAvbryt = new JButton("Avbryt");
@@ -156,38 +156,38 @@ public class LærerGrensesnitt extends JDialog {
 				dispose();
 			}
 		});
-		btnAvbryt.setBounds(286, 319, 140, 23);
+		btnAvbryt.setBounds(318, 292, 140, 23);
 		panel_2.add(btnAvbryt);
 		
 		JLabel lblsvar4 = new JLabel("Svaralternativ 4:");
-		lblsvar4.setBounds(10, 250, 165, 16);
+		lblsvar4.setBounds(10, 231, 165, 16);
 		panel_2.add(lblsvar4);
 		
 		textFieldsvar4 = new JTextField();
-		textFieldsvar4.setBounds(185, 247, 393, 22);
+		textFieldsvar4.setBounds(217, 228, 393, 22);
 		panel_2.add(textFieldsvar4);
 		textFieldsvar4.setColumns(10);
 		
 		JLabel lblsvar5 = new JLabel("Svaralternativ 5:");
-		lblsvar5.setBounds(12, 279, 163, 16);
+		lblsvar5.setBounds(10, 260, 163, 16);
 		panel_2.add(lblsvar5);
 		
 		textFieldsvar5 = new JTextField();
-		textFieldsvar5.setBounds(185, 276, 393, 22);
+		textFieldsvar5.setBounds(217, 257, 393, 22);
 		panel_2.add(textFieldsvar5);
 		textFieldsvar5.setColumns(10);
 		
 		JLabel lblStartDato = new JLabel("Start og slutt dato:");
-		lblStartDato.setBounds(10, 80, 119, 16);
+		lblStartDato.setBounds(10, 74, 119, 16);
 		panel_2.add(lblStartDato);
 		
 		textField = new JTextField();
-		textField.setBounds(185, 77, 192, 22);
+		textField.setBounds(217, 74, 192, 22);
 		panel_2.add(textField);
 		textField.setColumns(10);
 		
 		textField_1 = new JTextField();
-		textField_1.setBounds(389, 77, 189, 22);
+		textField_1.setBounds(421, 74, 189, 22);
 		panel_2.add(textField_1);
 		textField_1.setColumns(10);
 		
