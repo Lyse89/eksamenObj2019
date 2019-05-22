@@ -60,10 +60,22 @@ public class Kontroll {
     	return resultat;
 	}
 
-	public ResultSet getSpmEvalID(String sporsmal) throws Exception {
+	public ResultSet getEvalID(String evuNavn) throws Exception {
 		resultat = null;
 		PreparedStatement ps = null;
 		String sqlSetning = "SELECT evalID FROM tblevaluering WHERE evalNavn = ?;";
+		try {
+    		ps = forbindelse.prepareStatement(sqlSetning);
+    		ps.setString(1, (evuNavn));
+    		resultat = (ResultSet)ps.executeQuery();
+    	}catch(Exception e) {throw new Exception("Finner ikke kurset");}
+    	return resultat;
+	}
+
+	public ResultSet getSpmID(String sporsmal) {
+		resultat = null;
+		PreparedStatement ps = null;
+		String sqlSetning = "SELECT spmID FROM tblsporsmal WHERE spmTekst = ?;";
 		try {
     		ps = forbindelse.prepareStatement(sqlSetning);
     		ps.setString(1, (sporsmal));
