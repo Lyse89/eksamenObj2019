@@ -111,15 +111,10 @@ public class Kontroll {
 	
 	public void nyttSporsmal(int antsp, String kurset, String evuNavn, String sporsmal, Date startTid, Date slutTid, String alt1, String alt2, String alt3, String alt4, String alt5) throws Exception {
 		if (antsp==1) {
-			System.out.println("1");
 				ResultSet kurs = getKursID(kurset);
-				System.out.println(kurs);
 				kurs.next();
 				int kursID = kurs.getInt(1);
-				System.out.println(kursID);
-				System.out.println("2");
 				String sqlSetning = "INSERT INTO tblevaluering VALUES(NULL,'" + kursID + "','" + evuNavn + "','" + startTid + "','" + slutTid + "');";
-				System.out.println(sqlSetning);
 				try {
 					Statement utsagn = forbindelse.createStatement();
 	        		utsagn.executeUpdate(sqlSetning);    
@@ -141,7 +136,6 @@ public class Kontroll {
 				if(alt3 != null) {tellenull++;}
 				if(alt4 != null) {tellenull++;}
 				if(alt5 != null) {tellenull++;}
-				System.out.println("teller er" + tellenull);
 				int tall = 1;
 				String alternativ = null;
 				for(int i = 0; i<tellenull; i++) {
@@ -175,7 +169,6 @@ public class Kontroll {
 				if(alt3 != null) {tellenull++;}
 				if(alt4 != null) {tellenull++;}
 				if(alt5 != null) {tellenull++;}
-				System.out.println("teller er" + tellenull);
 				int tall = 1;
 				String alternativ = null;
 				for(int i = 0; i<tellenull; i++) {
