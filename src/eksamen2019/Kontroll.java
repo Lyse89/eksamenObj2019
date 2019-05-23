@@ -1,15 +1,19 @@
 package eksamen2019;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 
 public class Kontroll {
 	
+	private Kontroll kontroll = Kontroll.getInstance();
 	private String databasenavn = "jdbc:mysql://localhost:3306/kurs?serverTimezone=UTC";
     private String databasedriver = "com.mysql.jdbc.Driver";
     private Connection forbindelse;
@@ -48,13 +52,6 @@ public class Kontroll {
         }
     
     
-    
-
-    
-    
-    
-    
-    
 	public static Kontroll getInstance() {
 		return KontrollHolder.INSTANCE;
 	}
@@ -64,58 +61,126 @@ public class Kontroll {
         private static final Kontroll INSTANCE = new Kontroll();
     }
 
-	public void nyttSporsmal(int antSp, String evuNavn, String sporsmal, String alt1, String alt2, String alt3) throws Exception {
-		if (antSp==1) { 
-			try {
-				
-				String sqlSetning = "INSERT INTO tblevaluering VALUES";
-				}catch(Exception e){
-				throw new Exception("kan ikke utføre spørringen");
-				} //catch     
-		} else if (antSp>1) {
-			try {
-				String sqlSetning = "";
-				}catch(Exception e){
-				throw new Exception("kan ikke utføre spørringen");
-				} //catch   
-		}
-		
-	}
 
 	public ResultSet getKursID(String kursNavn) throws Exception {
-		resultat = null;
-		PreparedStatement ps = null;
-		String sqlSetning = "SELECT kursID FROM tblkurs WHERE kursNavn = ?;";
+		System.out.println("22");
 		try {
-    		ps = forbindelse.prepareStatement(sqlSetning);
-    		ps.setString(1, (kursNavn));
-    		resultat = (ResultSet)ps.executeQuery();
+			resultat = null;
+			String sqlSetning = "SELECT kursID FROM tblkurs WHERE kursNavn = '" + kursNavn + "';";
+			System.out.println(sqlSetning);
+    		utsagn = forbindelse.createStatement();
+    		resultat = utsagn.executeQuery(sqlSetning);
+    		System.out.println("222");
     	}catch(Exception e) {throw new Exception("Finner ikke kurset");}
     	return resultat;
 	}
 
 	public ResultSet getEvalID(String evuNavn) throws Exception {
 		resultat = null;
-		PreparedStatement ps = null;
-		String sqlSetning = "SELECT evalID FROM tblevaluering WHERE evalNavn = ?;";
 		try {
-    		ps = forbindelse.prepareStatement(sqlSetning);
-    		ps.setString(1, (evuNavn));
-    		resultat = (ResultSet)ps.executeQuery();
+			String sqlSetning = "SELECT evalID FROM tblevaluering WHERE evalNavn = '" + evuNavn + "';";
+			utsagn = forbindelse.createStatement();
+            resultat = utsagn.executeQuery(sqlSetning);
     	}catch(Exception e) {throw new Exception("Finner ikke kurset");}
     	return resultat;
 	}
 
-	public ResultSet getSpmID(String sporsmal) {
+	public ResultSet getSpmID(String sporsmal) throws Exception {
 		resultat = null;
-		PreparedStatement ps = null;
-		String sqlSetning = "SELECT spmID FROM tblsporsmal WHERE spmTekst = ?;";
 		try {
-    		ps = forbindelse.prepareStatement(sqlSetning);
-    		ps.setString(1, (sporsmal));
-    		resultat = (ResultSet)ps.executeQuery();
+			String sqlSetning = "SELECT spmID FROM tblsporsmal WHERE spmTekst = '" + sporsmal + "';";;
+			utsagn = forbindelse.createStatement();
+            resultat = utsagn.executeQuery(sqlSetning);
     	}catch(Exception e) {throw new Exception("Finner ikke kurset");}
     	return resultat;
+	}
+	
+	
+	public void nyttSporsmal(int antsp, String kurset, String evuNavn, String sporsmal, Date startTid, Date slutTid, String alt1, String alt2, String alt3, String alt4, String alt5) throws Exception {
+		if (antsp==1) {
+			System.out.println("1");
+				ResultSet kurs = getKursID(kurset);
+				System.out.println(kurs);
+				kurs.next();
+				int kursID = kurs.getInt(1);
+				System.out.println(kursID);
+				System.out.println("2");
+				String sqlSetning = "INSERT INTO tblevaluering VALUES(NULL,'" + kursID + "','" + evuNavn + "','" + startTid + "','" + slutTid + "');";
+				System.out.println(sqlSetning);
+				try {
+					Statement utsagn = forbindelse.createStatement();
+	        		utsagn.executeUpdate(sqlSetning);    
+				}catch(Exception ex) {throw new Exception("Kan ikke legge til evaluering");}
+				ResultSet eval = getEvalID(evuNavn);
+				eval.next();
+				int evalID = eval.getInt(1);
+				String sqlSetning2 = "INSERT INTO tblsporsmal VALUES(NULL,'" + evalID + "','" + sporsmal + "');";
+				try { 
+					Statement utsagn = forbindelse.createStatement();
+					utsagn.executeUpdate(sqlSetning2); 
+				}catch(Exception ex) {throw new Exception("Kan ikke legge til sporsmal");}
+				ResultSet spm = getSpmID(sporsmal);
+				spm.next();
+				int spmID = spm.getInt(1);
+				int tellenull = 0;
+				if(alt1 != null) {tellenull++;}
+				if(alt2 != null) {tellenull++;}
+				if(alt3 != null) {tellenull++;}
+				if(alt4 != null) {tellenull++;}
+				if(alt5 != null) {tellenull++;}
+				System.out.println("teller er" + tellenull);
+				int tall = 1;
+				String alternativ = null;
+				for(int i = 0; i<tellenull; i++) {
+					if(i==0) {alternativ=alt1;}
+					if(i==1) {alternativ=alt2;}
+					if(i==2) {alternativ=alt3;}
+					if(i==3) {alternativ=alt4;}
+					if(i==4) {alternativ=alt5;}
+					String sqlSetning3 = "INSERT INTO tblalternativ VALUES(NULL,'" + spmID + "','" + alternativ + "');";
+					try { 
+						Statement utsagn = forbindelse.createStatement();
+						utsagn.executeUpdate(sqlSetning3); 
+					}catch(Exception ex) {throw new Exception("Kan ikke legge til alternativ");}
+					tall++;
+					}
+			} else if (antsp>1) {
+				ResultSet eval = getEvalID(evuNavn);
+				eval.next();
+				int evalID = eval.getInt(1);
+				String sqlSetning = "INSERT INTO tblsporsmal VALUES(NULL,'" + evalID + "','" + sporsmal + "');";
+				try {
+					Statement utsagn = forbindelse.createStatement();
+	        		utsagn.executeUpdate(sqlSetning);   
+				}catch(Exception e){throw new Exception("kan ikke utføre spørringen");} //catch
+				ResultSet spm = getSpmID(sporsmal);
+				spm.next();
+				int spmID = spm.getInt(1);
+				int tellenull = 0;
+				if(alt1 != null) {tellenull++;}
+				if(alt2 != null) {tellenull++;}
+				if(alt3 != null) {tellenull++;}
+				if(alt4 != null) {tellenull++;}
+				if(alt5 != null) {tellenull++;}
+				System.out.println("teller er" + tellenull);
+				int tall = 1;
+				String alternativ = null;
+				for(int i = 0; i<tellenull; i++) {
+					if(i==0) {alternativ=alt1;}
+					if(i==1) {alternativ=alt2;}
+					if(i==2) {alternativ=alt3;}
+					if(i==3) {alternativ=alt4;}
+					if(i==4) {alternativ=alt5;}
+					String sqlSetning3 = "INSERT INTO tblalternativ VALUES(NULL,'" + spmID + "','" + alternativ + "');";
+					try { 
+						Statement utsagn = forbindelse.createStatement();
+						utsagn.executeUpdate(sqlSetning3); 
+					}catch(Exception ex) {throw new Exception("Kan ikke legge til alternativ");}
+					tall++;
+					}
+				
+		}
+		
 	}
 
 }
