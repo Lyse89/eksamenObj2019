@@ -38,7 +38,7 @@ public class Kontroll {
     public ResultSet hentEvaluering() throws Exception {
         ResultSet resultat = null;
         try {
-        	String sqlSetning = "SELECT evalNavn FROM tblevaluering";
+        	String sqlSetning = "SELECT evalNavn FROM kurs.tblevaluering";
         	Statement utsagn = forbindelse.createStatement();
         	resultat = utsagn.executeQuery(sqlSetning);
         }catch(Exception e){
@@ -114,7 +114,12 @@ public class Kontroll {
     		ps = forbindelse.prepareStatement(sqlSetning);
     		ps.setString(1, (sporsmal));
     		resultat = (ResultSet)ps.executeQuery();
-    	}catch(Exception e) {throw new Exception("Finner ikke kurset");}
+    	}catch(Exception e) {try {
+			throw new Exception("Finner ikke kurset");
+		} catch (Exception e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}}
     	return resultat;
 	}
 

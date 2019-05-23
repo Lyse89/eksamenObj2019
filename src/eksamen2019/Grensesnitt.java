@@ -95,10 +95,10 @@ public class Grensesnitt extends JFrame {
 
 	public void regSpormal(String evuNavn, String sporsmal, String alt1, String alt2, String alt3) {
 		try {
-			ResultSet kursID = kontroll.getKursID(kursNavn);
+			//ResultSet kursID = kontroll.getKursID(kursNavn);
 			ResultSet evalID = kontroll.getEvalID(evuNavn);
 			ResultSet spmID = kontroll.getSpmID(sporsmal);
-			kontroll.nyttSporsmal(kursID, sporsmal, alt1, alt2, alt3);
+			//kontroll.nyttSporsmal(kursID, sporsmal, alt1, alt2, alt3);
 		}catch(Exception e) {JOptionPane.showMessageDialog(this, e.getMessage());}
 		
 	}
