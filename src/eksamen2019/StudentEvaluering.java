@@ -8,6 +8,7 @@ import javax.swing.JDialog;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JComboBox;
 import java.awt.Font;
 import java.awt.event.ActionListener;
@@ -20,7 +21,8 @@ import javax.swing.border.TitledBorder;
 public class StudentEvaluering extends JDialog {
 	private Kontroll kontroll = Kontroll.getInstance();
 	private final JPanel contentPanel = new JPanel();
-	JComboBox Studentevalueringdropdown = new JComboBox();
+	JComboBox<String> Studentevalueringdropdown = new JComboBox<String>();
+	public String valgtSpørreSkjema = (String) Studentevalueringdropdown.getSelectedItem();
 
 	/**
 	 * Launch the application.
@@ -65,7 +67,7 @@ public class StudentEvaluering extends JDialog {
 			panel.add(lblEvalueringsnavn);
 		}
 		
-		
+		// Dropdown meny 
 		Studentevalueringdropdown.setBounds(136, 16, 278, 22);
 		panel.add(Studentevalueringdropdown);
 		
@@ -102,4 +104,6 @@ public class StudentEvaluering extends JDialog {
 		}
 	return evaluering;
 	}
+	
+
 }
