@@ -74,7 +74,9 @@ public class Kontroll {
         private static final Kontroll INSTANCE = new Kontroll();
     }
 
-
+	/**
+	 * Metode som gir kursID tilbake
+	 */
 	public ResultSet getKursID(String kursNavn) throws Exception {
 		try {
 			resultat = null;
@@ -84,7 +86,10 @@ public class Kontroll {
     	}catch(Exception e) {throw new Exception("Finner ikke kurset");}
     	return resultat;
 	}
-
+	
+	/**
+	 * Metode som gir evalID tilbake
+	 */
 	public ResultSet getEvalID(String evuNavn) throws Exception {
 		resultat = null;
 		try {
@@ -94,7 +99,10 @@ public class Kontroll {
     	}catch(Exception e) {throw new Exception("Finner ikke kurset");}
     	return resultat;
 	}
-
+	
+	/**
+	 * Metode som gir spmID tilbake
+	 */
 	public ResultSet getSpmID(String sporsmal) throws Exception {
 		resultat = null;
 		try {
@@ -106,6 +114,12 @@ public class Kontroll {
 	}
 	
 	
+	/**
+	 * Denne metoden Registrere
+	 * til tblevaluering
+	 * tblsporsmal
+	 * tlbalternative
+	 */
 	public void nyttSporsmal(int antsp, String kurset, String evuNavn, String sporsmal, Date startTid, Date slutTid, String alt1, String alt2, String alt3, String alt4, String alt5) throws Exception {
 		if (antsp==1) {
 				ResultSet kurs = getKursID(kurset);
@@ -149,6 +163,7 @@ public class Kontroll {
 					}catch(Exception ex) {throw new Exception("Kan ikke legge til alternativ");}
 					tall++;
 					}
+				//Vis antSp er 2 eller mer så registreres bare spørsmål og alternativer
 			} else if (antsp>1) {
 				ResultSet eval = getEvalID(evuNavn);
 				eval.next();

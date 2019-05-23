@@ -43,13 +43,15 @@ public class LærerGrensesnitt extends JDialog  {
 	JScrollPane sporerulling;
 	private final String[] kolonnenavn = {"Sporsmåll:","Alternativ 1:","Alternativ 2","Alternativ 3","Alternativ 4","Alternativ 5"};
 	private final Object[][] defaulttable = new Object[][] {{},{}};
+	//antsp er for sjekk om det er første spårsmål i kontroll så du veit om du må registrere Evaulering og Spm
 	int antsp = 0;
+	//rader er for å tell hvor en rad skal inn i tabellen
 	int rader = 0;
 
 	
 
 	/**
-	 * Launch the application.
+	 * Brukt windowBuilder til å bygge opp alle vinduene
 	 */
 	public static void main(String[] args) {
 		try {
@@ -151,6 +153,10 @@ public class LærerGrensesnitt extends JDialog  {
 		lblsvar3.setBounds(10, 202, 165, 16);
 		panel_2.add(lblsvar3);
 		
+		
+		/**
+		 * Starter lagringen av spørsmål, kjører vidre til nyttSporsmal()
+		 */
 		JButton btnNesteSprml = new JButton("Lagre spørsmål");
 		btnNesteSprml.addActionListener(new ActionListener() {
 			@Override
@@ -228,7 +234,10 @@ public class LærerGrensesnitt extends JDialog  {
 			public void actionPerformed(ActionEvent e) {
 				tømAlt();
 			}
-
+			
+			/**
+			 * Denne metoden tømer alle Input feltene og reseter de globale telle variablene.
+			 */
 			private void tømAlt() {
 				textFieldevalueringsnavn.setText("");
 				textFieldsporsmal.setText("");
@@ -251,7 +260,9 @@ public class LærerGrensesnitt extends JDialog  {
 		panel_1.setLayout(null);
 	
 	}
-	
+	/**
+	 *Lager comboboxen
+	 */
 	private ResultSet laglistecombobox() throws Exception {
 		ResultSet kurs = kontroll.hentKurs();
 		try {
@@ -265,6 +276,10 @@ public class LærerGrensesnitt extends JDialog  {
 	return kurs;
 	}
 	
+	/**
+	 * Hjerte til LærerGrensesnitt, denne kjører alt til kontroll av inputer og 
+	 * Setter opp tabel oversikten for brukern samtidig
+	 */
 	private void nyttSporsmal() throws Exception {
 		++antsp;
 		String kurset = (String)comboBoxkursnavn.getItemAt(comboBoxkursnavn.getSelectedIndex());
@@ -278,6 +293,7 @@ public class LærerGrensesnitt extends JDialog  {
 		java.time.LocalDate slutTidSQL = java.time.LocalDate.parse(slutTid, formatter);
 		java.sql.Date sqlDateSlut = java.sql.Date.valueOf(slutTidSQL);
 		String alt1 = textFieldsvar1.getText();
+		//Sjekker om Alternative svarene er tome, vis de er det så setter vi dem til NULL
 		if (textFieldsvar1.getText().trim().isEmpty()) {
 		    alt1 = null;
 		}
@@ -307,7 +323,10 @@ public class LærerGrensesnitt extends JDialog  {
 	}
 	
 
-
+	/**
+	 * Tømer fletene for spørsmål og svaralternative for å gjøre dem klare til 
+	 * å mota et nytt spørsmål
+	 */
 	private void tømFelt() {
 		textFieldsporsmal.setText("");
 		textFieldsvar1.setText("");
