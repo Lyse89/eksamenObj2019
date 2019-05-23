@@ -35,11 +35,16 @@ public class LærerGrensesnitt extends JDialog  {
 	private JTextField textFieldsvar3;
 	private JTextField textFieldsvar4;
 	private JTextField textFieldsvar5;
-	private JTable table;
 	JComboBox<String> comboBoxkursnavn = new JComboBox<String>();
 	private JTextField textField;
 	private JTextField textField_1;
+	DefaultTableModel innhold;
+	JTable sporetabell;
+	JScrollPane sporerulling;
+	private final String[] kolonnenavn = {"Sporsmåll:","Alternativ 1:","Alternativ 2","Alternativ 3","Alternativ 4","Alternativ 5"};
+	private final Object[][] defaulttable = new Object[][] {{},{}};
 	int antsp = 0;
+	int rader = 0;
 
 	
 
@@ -207,20 +212,10 @@ public class LærerGrensesnitt extends JDialog  {
 		scrollPane.setBounds(24, 437, 622, 151);
 		panel.add(scrollPane);
 		
-		table = new JTable();
-		table.setModel(new DefaultTableModel(
-			new Object[][] {
-				{null, null, null, null},
-				{null, null, null, null},
-				{null, null, null, null},
-				{null, null, null, null},
-				{null, null, null, null},
-			},
-			new String[] {
-				"Spørsmål", "Svar 1", "Svar 2", "Svar 3"
-			}
-		));
-		scrollPane.setViewportView(table);
+		innhold = new DefaultTableModel(defaulttable, kolonnenavn);
+		sporetabell = new JTable(innhold);
+		sporerulling = new JScrollPane(sporetabell);
+		scrollPane.setViewportView(sporetabell);
 		
 		JLabel lblDineSprsmlS = new JLabel("Dine sp\u00F8rsm\u00E5l s\u00E5 langt:");
 		lblDineSprsmlS.setBounds(24, 410, 137, 14);
@@ -244,9 +239,11 @@ public class LærerGrensesnitt extends JDialog  {
 				textFieldsvar2.setText("");
 				textFieldsvar3.setText("");
 				textFieldsvar4.setText("");
-				textFieldsvar5.setText("");	
-				int antsp = 0;
-			}
+				textFieldsvar5.setText("");
+				innhold.setRowCount(0);
+				antsp = 0;
+				rader = 0;
+			} 
 		});
 		
 		JPanel panel_1 = new JPanel();
@@ -301,8 +298,15 @@ public class LærerGrensesnitt extends JDialog  {
 		    alt5 = null;
 		}
 		kontroll.nyttSporsmal(antsp, kurset, evuNavn, sporsmal, sqlDateStart, sqlDateSlut, alt1, alt2, alt3, alt4, alt5);
+		
+		Object[] rad = {sporsmal, alt1, alt2, alt3, alt4, alt5};
+		
+		innhold.insertRow(rader, rad);
+		rader++;
 		tømFelt();
 	}
+	
+
 
 	private void tømFelt() {
 		textFieldsporsmal.setText("");

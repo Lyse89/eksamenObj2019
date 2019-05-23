@@ -76,14 +76,11 @@ public class Kontroll {
 
 
 	public ResultSet getKursID(String kursNavn) throws Exception {
-		System.out.println("22");
 		try {
 			resultat = null;
 			String sqlSetning = "SELECT kursID FROM tblkurs WHERE kursNavn = '" + kursNavn + "';";
-			System.out.println(sqlSetning);
     		utsagn = forbindelse.createStatement();
     		resultat = utsagn.executeQuery(sqlSetning);
-    		System.out.println("222");
     	}catch(Exception e) {throw new Exception("Finner ikke kurset");}
     	return resultat;
 	}
@@ -112,6 +109,7 @@ public class Kontroll {
 	public void nyttSporsmal(int antsp, String kurset, String evuNavn, String sporsmal, Date startTid, Date slutTid, String alt1, String alt2, String alt3, String alt4, String alt5) throws Exception {
 		if (antsp==1) {
 				ResultSet kurs = getKursID(kurset);
+				
 				kurs.next();
 				int kursID = kurs.getInt(1);
 				String sqlSetning = "INSERT INTO tblevaluering VALUES(NULL,'" + kursID + "','" + evuNavn + "','" + startTid + "','" + slutTid + "');";
