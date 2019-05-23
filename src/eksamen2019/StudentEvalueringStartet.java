@@ -10,16 +10,22 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JTextPane;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JRadioButton;
 import javax.swing.JRadioButtonMenuItem;
 import javax.swing.border.TitledBorder;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.sql.ResultSet;
 import java.awt.event.ActionEvent;
 
 public class StudentEvalueringStartet extends JDialog {
 	private Kontroll kontroll = Kontroll.getInstance();
 	private final JPanel contentPanel = new JPanel();
 	private final ButtonGroup buttonGroup = new ButtonGroup();
+	JTextPane textPane = new JTextPane();
+	
 	
 	/**
 	 * Launch the application.
@@ -39,6 +45,18 @@ public class StudentEvalueringStartet extends JDialog {
 	 * Create the dialog.
 	 */
 	public StudentEvalueringStartet() {
+		addWindowListener(new WindowAdapter() {
+			public void windowOpened(WindowEvent arg0) {
+				try {
+					
+					
+					
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+		
 		setBounds(100, 100, 450, 330);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -51,7 +69,7 @@ public class StudentEvalueringStartet extends JDialog {
 		contentPanel.add(panel);
 		panel.setLayout(null);
 		
-		JTextPane textPane = new JTextPane();
+		
 		textPane.setBounds(82, 21, 322, 24);
 		panel.add(textPane);
 		
@@ -86,6 +104,7 @@ public class StudentEvalueringStartet extends JDialog {
 		JButton btnNesteSprsml = new JButton("Neste Sp\u00F8rsm\u00E5l");
 		btnNesteSprsml.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				fyllSporsmal();
 			}
 		});
 		btnNesteSprsml.setBounds(170, 221, 127, 25);
@@ -101,5 +120,11 @@ public class StudentEvalueringStartet extends JDialog {
 		rdbtnSvarAlternativ_1.setBounds(79, 168, 127, 25);
 		panel.add(rdbtnSvarAlternativ_1);
 
+	}
+	
+	public ResultSet fyllSporsmal(String valgtSpørreSkjema) throws Exception {
+		ResultSet sporsmal = kontroll.hentSpørsmål(valgtSpørreSkjema);
+		textPane.setText(textPane.getText() + "HEY");
+		return sporsmal;
 	}
 }

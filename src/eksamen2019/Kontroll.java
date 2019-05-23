@@ -47,6 +47,19 @@ public class Kontroll {
         return resultat;      
         }
     
+    public ResultSet hentSpørsmål(String valgtSpørreSkjema) throws Exception {
+        ResultSet resultat = null;
+        try {
+			String sqlSetning = "SELECT tblsporsmal.spmTekst FROM tblsporsmal INNER JOIN tblevaluering ON tblevaluering.evalNavn = " + valgtSpørreSkjema  + "awd" +" AND tblsporsmal.spmEvalID =tblevaluering.evalID";
+        	Statement utsagn = forbindelse.createStatement();
+        	resultat = utsagn.executeQuery(sqlSetning);
+        }catch(Exception e){
+        	throw new Exception("Kan ikke utføre spørringen");
+        }
+        return resultat;      
+        }
+    
+    
     
     
 
@@ -106,7 +119,7 @@ public class Kontroll {
     	return resultat;
 	}
 
-	public ResultSet getSpmID(String sporsmal) {
+	public ResultSet getSpmID(String sporsmal) throws Exception {
 		resultat = null;
 		PreparedStatement ps = null;
 		String sqlSetning = "SELECT spmID FROM tblsporsmal WHERE spmTekst = ?;";
@@ -117,5 +130,8 @@ public class Kontroll {
     	}catch(Exception e) {throw new Exception("Finner ikke kurset");}
     	return resultat;
 	}
+
+
+
 
 }
