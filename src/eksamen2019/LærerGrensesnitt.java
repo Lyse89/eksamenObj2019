@@ -37,18 +37,7 @@ public class LærerGrensesnitt extends JDialog {
 	private JTextField textField;
 	private JTextField textField_1;
 
-	// Test, fjern hvis det ikke fungerer
-	private JPanel panel_1 = new RapporteringPanel();
-	/*
-	// For rapport-panel ----------------------------------------------------------
-	private JTable table_1;
-	private JTable table_2;
-
-	private JComboBox evalComboBox = new JComboBox();
-	// Brukes for JTable
-	private final Object[][] defaulttabell = new Object[][] {{null,null,null,null},{null,null,null,null}};
-	private final String[] kolonnenavn = {"OrdreNr","VNr","PrisPerEnhet","Antall"};
-	*/
+	private RapporteringPanel panel_1 = new RapporteringPanel();
 	// ----------------------------------------------------------------------------
 	
 
@@ -73,7 +62,7 @@ public class LærerGrensesnitt extends JDialog {
 			public void windowOpened(WindowEvent arg0) {
 				try {
 					laglistecombobox();
-					//fyllCombobox();
+					panel_1.fyllCombobox();
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -234,87 +223,8 @@ public class LærerGrensesnitt extends JDialog {
 		
 		// Test av eksternt panel
 		tabbedPane.addTab("Rapport", null, panel_1, null);
-
-		
-		/*
-		// Panelet for rapportering -----------------------------------------------------------------------
-		JPanel panel_1 = new JPanel();
-		tabbedPane.addTab("Rapport", null, panel_1, null);
-		panel_1.setLayout(null);
-		
-		JLabel lblVelgEvaluering = new JLabel("Velg evaluering:");
-		lblVelgEvaluering.setBounds(30, 40, 124, 15);
-		panel_1.add(lblVelgEvaluering);
-		
-		// combobox
-		evalComboBox.setBounds(164, 35, 349, 24);
-		panel_1.add(evalComboBox);
-		
-		JButton btnVelg = new JButton("velg");
-		btnVelg.setBounds(525, 35, 117, 25);
-		panel_1.add(btnVelg);
-
-		btnVelg.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				// henter valgt data i combobox
-				String valgtEvaluering = (String)evalComboBox.getItemAt(evalComboBox.getSelectedIndex());
-
-				// testprint
-				System.out.println(valgtEvaluering);
-				
-				// Her kommer kall paa metode for henting av
-				
-				// antall svar per alternativ
-				// hvem som har svart paa evalueringen
-			}
-		});
-	
-		table_1 = new JTable();
-		table_1.setBounds(23, 98, 619, 173);
-		panel_1.add(table_1);
-		
-		table_2 = new JTable();
-		table_2.setBounds(23, 346, 242, 266);
-		panel_1.add(table_2);
-		
-		JLabel lblFordelingAvSvar = new JLabel("Fordeling av svar");
-		lblFordelingAvSvar.setBounds(35, 79, 177, 15);
-		panel_1.add(lblFordelingAvSvar);
-		
-		JLabel lblStudenterSomHar = new JLabel("Studenter som har svart");
-		lblStudenterSomHar.setBounds(30, 319, 201, 15);
-		panel_1.add(lblStudenterSomHar);
-		{
-
-		}
-		*/
-
-		// ------------------------------------------------------------------------------------------------
-		// eksempel fjern
-
-			// hente ut valgt element fra combobox
-			// String test23 = Arrays.toString((String[])evalComboBox.getSelectedItem());
-
-			/* Eksempel henting av data til comboboxen
-			*/
-
-		// slutt eksempel ------------------------------------------------------------------------------------
 	}
-/*	
-	private void fyllCombobox() throws Exception {
-		// henter info fra databasen
-		ResultSet evaluering = kontroll.hentEvaluering();
-		try {
-			while(evaluering.next()) {
-			String EvalueringsNavn = evaluering.getString(1);
-			// Legger til verdien i comboboxen
-			evalComboBox.addItem(EvalueringsNavn);
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-*/
+
 
 	private Object laglistecombobox() throws Exception {
 		ResultSet kurs = kontroll.hentKurs();

@@ -5,8 +5,6 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
-import java.util.ArrayList;
-import javax.swing.JOptionPane;
 
 public class Kontroll {
 	
@@ -46,14 +44,6 @@ public class Kontroll {
         }
         return resultat;      
         }
-    
-    
-    
-
-    
-    
-    
-    
     
 	public static Kontroll getInstance() {
 		return KontrollHolder.INSTANCE;
@@ -117,10 +107,78 @@ public class Kontroll {
     	}catch(Exception e) {try {
 			throw new Exception("Finner ikke kurset");
 		} catch (Exception e1) {
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}}
     	return resultat;
 	}
+
+	// metoder for rapport-jpanel-------------------------------------------------------------
+	public ResultSet hentAntPerSvar(String evaluering) throws Exception {
+		resultat = null;
+		try {
+				String sqlSporring = "";
+				sqlSporring += "select tblsporsmal.spmTekst, tblalternativ.altTekst, count(tblsvar.svarAltID) as antallSvar ";
+				sqlSporring += "from tblsporsmal inner join ";
+				sqlSporring += "(";
+				sqlSporring += "tblalternativ left join tblsvar ";
+				sqlSporring += "on tblalternativ.altID = tblsvar.svarAltID ";
+				sqlSporring += ") ";
+				sqlSporring += "on tblsporsmal.spmID = tblalternativ.altSpmID ";
+				sqlSporring += "group by tblalternativ.altTekst, tblsporsmal.spmTekst ";
+				sqlSporring += "order by tblsporsmal.spmTekst;";
+				
+				utsagn = forbindelse.createStatement();
+				resultat = utsagn.executeQuery(sqlSporring);
+		} catch(Exception e){
+				e.printStackTrace();
+				throw new Exception("kan ikke utfore sporringen");
+		}
+		return resultat;        
+	}
+	
+	public ResultSet hentRespondenter(String evaluering) throws Exception {
+		resultat = null;
+		try {
+				String sqlSporring = "";
+				sqlSporring += "select tblstudent.studNavn ";
+				sqlSporring += "from tblstudent, tblsvar, tblalternativ, tblsporsmal, tblevaluering ";
+				sqlSporring += "where tblstudent.studId = tblsvar.svarStudID ";
+				sqlSporring += "and tblsvar.svarAltID = tblalternativ.altID ";
+				sqlSporring += "and tblalternativ.altSpmID = tblsporsmal.spmID ";
+				sqlSporring += "and tblsporsmal.spmEvalID = tblevaluering.evalID ";
+				sqlSporring += "and tblevaluering.evalNavn = '" + evaluering + "';";
+
+				utsagn = forbindelse.createStatement();
+				resultat = utsagn.executeQuery(sqlSporring);
+		} catch(Exception e){
+				e.printStackTrace();
+				throw new Exception("kan ikke utfore sporringen");
+		}
+		return resultat;        
+	}
+	public void slettEvalueringssvar(String evaluering) throws Exception {
+		
+		try {
+			// Ingen vasking av escape chars
+			String sqlSporring = "";
+			sqlSporring += 
+			sqlSporring += "delete from tblsvar ";
+			sqlSporring += "where tblsvar.svarAltID in ";
+			sqlSporring += "(select tblsvar.svarAltID ";
+			sqlSporring += "from tblalternativ, tblsporsmal, tblevaluering ";
+			sqlSporring += "where tblsvar.svarAltID = tblalternativ.altID ";
+			sqlSporring += "and tblalternativ.altSpmID = tblsporsmal.spmID ";
+			sqlSporring += "and tblsporsmal.spmEvalID = tblevaluering.evalID ";
+			sqlSporring += "and tblevaluering.evalNavn = '" + evaluering + "');";
+
+			utsagn = forbindelse.createStatement();
+			utsagn.executeUpdate(sqlSporring);
+		} catch(Exception e){
+			e.printStackTrace();
+			throw new Exception("Sletting av evalueringsdata mislyktes");
+		}
+	}
+
+	// ---------------------------------------------------------------------------------------
 
 }
