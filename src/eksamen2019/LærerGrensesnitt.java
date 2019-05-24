@@ -1,48 +1,62 @@
 package eksamen2019;
 import java.awt.BorderLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.Arrays;
-
+import java.awt.FlowLayout;
 import javax.swing.JButton;
-import javax.swing.JComboBox;
 import javax.swing.JDialog;
+import javax.swing.JPanel;
+import javax.swing.border.EmptyBorder;
+import javax.swing.JTabbedPane;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTabbedPane;
-import javax.swing.JTable;
+import javax.swing.JComboBox;
 import javax.swing.JTextField;
-import javax.swing.border.EmptyBorder;
+import javax.swing.JTable;
 import javax.swing.border.TitledBorder;
+import javax.swing.JScrollPane;
 import javax.swing.table.DefaultTableModel;
+import java.awt.event.ActionListener;
+import java.sql.ResultSet;
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.awt.event.ActionEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
-public class LærerGrensesnitt extends JDialog {
+public class LærerGrensesnitt extends JDialog  {
 	private Kontroll kontroll = Kontroll.getInstance();
 	private final JPanel contentPanel = new JPanel();
 	private JTextField textFieldevalueringsnavn;
-	private JTextField textFieldspørsmål;
+	private JTextField textFieldsporsmal;
 	private JTextField textFieldsvar1;
 	private JTextField textFieldsvar2;
 	private JTextField textFieldsvar3;
 	private JTextField textFieldsvar4;
 	private JTextField textFieldsvar5;
-	private JTable table;
-	JComboBox comboBoxkursnavn = new JComboBox();
+	JComboBox<String> comboBoxkursnavn = new JComboBox<String>();
 	private JTextField textField;
 	private JTextField textField_1;
+	DefaultTableModel innhold;
+	JTable sporetabell;
+	JScrollPane sporerulling;
 
+	private final String[] kolonnenavn = {"Sporsmåll:","Alternativ 1:","Alternativ 2","Alternativ 3","Alternativ 4","Alternativ 5"};
+	private final Object[][] defaulttable = new Object[][] {{},{}};
+
+    // rapport panel
 	private RapporteringPanel panel_1 = new RapporteringPanel();
-	// ----------------------------------------------------------------------------
+
+	//antsp er for sjekk om det er første spårsmål i kontroll så du veit om du må registrere Evaulering og Spm
+	int antsp = 0;
+	//rader er for å tell hvor en rad skal inn i tabellen
+	int rader = 0;
+
 	
 
 	/**
-	 * Launch the application.
+	 * Brukt windowBuilder til å bygge opp alle vinduene
 	 */
 	public static void main(String[] args) {
 		try {
@@ -68,6 +82,7 @@ public class LærerGrensesnitt extends JDialog {
 				}
 			}
 		});
+
 		setBounds(100, 100, 688, 711);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -113,10 +128,10 @@ public class LærerGrensesnitt extends JDialog {
 		lblspørsmål.setBounds(10, 122, 165, 16);
 		panel_2.add(lblspørsmål);
 		
-		textFieldspørsmål = new JTextField();
-		textFieldspørsmål.setBounds(217, 119, 393, 22);
-		panel_2.add(textFieldspørsmål);
-		textFieldspørsmål.setColumns(10);
+		textFieldsporsmal = new JTextField();
+		textFieldsporsmal.setBounds(217, 119, 393, 22);
+		panel_2.add(textFieldsporsmal);
+		textFieldsporsmal.setColumns(10);
 		
 		textFieldsvar1 = new JTextField();
 		textFieldsvar1.setBounds(217, 145, 393, 22);
@@ -145,22 +160,25 @@ public class LærerGrensesnitt extends JDialog {
 		lblsvar3.setBounds(10, 202, 165, 16);
 		panel_2.add(lblsvar3);
 		
-		JButton btnNesteSprml = new JButton("Neste spørsmål");
+		
+		/**
+		 * Starter lagringen av spørsmål, kjører vidre til nyttSporsmal()
+		 */
+		JButton btnNesteSprml = new JButton("Lagre spørsmål");
 		btnNesteSprml.addActionListener(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent e) {
+				try {
+					nyttSporsmal();
+				} catch (Exception e1) {
+					e1.printStackTrace();
+				}
 			}
 		});
+		
 		btnNesteSprml.setBounds(470, 292, 140, 23);
 		panel_2.add(btnNesteSprml);
 		
-		JButton btnAvbryt = new JButton("Avbryt");
-		btnAvbryt.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				dispose();
-			}
-		});
-		btnAvbryt.setBounds(318, 292, 140, 23);
-		panel_2.add(btnAvbryt);
 		
 		JLabel lblsvar4 = new JLabel("Svaralternativ 4:");
 		lblsvar4.setBounds(10, 231, 165, 16);
@@ -184,6 +202,7 @@ public class LærerGrensesnitt extends JDialog {
 		lblStartDato.setBounds(10, 74, 119, 16);
 		panel_2.add(lblStartDato);
 		
+		
 		textField = new JTextField();
 		textField.setBounds(217, 74, 192, 22);
 		panel_2.add(textField);
@@ -198,21 +217,13 @@ public class LærerGrensesnitt extends JDialog {
 		scrollPane.setBounds(24, 437, 622, 151);
 		panel.add(scrollPane);
 		
-		table = new JTable();
-		table.setModel(new DefaultTableModel(
-			new Object[][] {
-				{null, null, null, null},
-				{null, null, null, null},
-				{null, null, null, null},
-				{null, null, null, null},
-				{null, null, null, null},
-			},
-			new String[] {
-				"Spørsmål", "Svar 1", "Svar 2", "Svar 3"
-			}
-		));
-		scrollPane.setViewportView(table);
+		//tabell for spørsmål, fyller inn nytt spørsmål hver gang et nytt blir lagt
+		innhold = new DefaultTableModel(defaulttable, kolonnenavn);
+		sporetabell = new JTable(innhold);
+		sporerulling = new JScrollPane(sporetabell);
+		scrollPane.setViewportView(sporetabell);
 		
+	
 		JLabel lblDineSprsmlS = new JLabel("Dine sp\u00F8rsm\u00E5l s\u00E5 langt:");
 		lblDineSprsmlS.setBounds(24, 410, 137, 14);
 		panel.add(lblDineSprsmlS);
@@ -220,13 +231,38 @@ public class LærerGrensesnitt extends JDialog {
 		JButton btnLagSprreunderskelse = new JButton("Ferdig");
 		btnLagSprreunderskelse.setBounds(460, 596, 186, 25);
 		panel.add(btnLagSprreunderskelse);
+		btnLagSprreunderskelse.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				tømAlt();
+			}
+			
+			/**
+			 * Denne metoden tømer alle Input feltene og reseter de globale telle variablene.
+			 */
+			private void tømAlt() {
+				textFieldevalueringsnavn.setText("");
+				textFieldsporsmal.setText("");
+				textField.setText("");
+				textField_1.setText("");
+				textFieldsporsmal.setText("");
+				textFieldsvar1.setText("");
+				textFieldsvar2.setText("");
+				textFieldsvar3.setText("");
+				textFieldsvar4.setText("");
+				textFieldsvar5.setText("");
+				innhold.setRowCount(0);
+				antsp = 0;
+				rader = 0;
+			} 
+		});
 		
-		// Test av eksternt panel
 		tabbedPane.addTab("Rapport", null, panel_1, null);
+	
 	}
-
-
-	private Object laglistecombobox() throws Exception {
+	/**
+	 *Lager comboboxen
+	 */
+	private ResultSet laglistecombobox() throws Exception {
 		ResultSet kurs = kontroll.hentKurs();
 		try {
 			while(kurs.next()) {
@@ -239,18 +275,64 @@ public class LærerGrensesnitt extends JDialog {
 	return kurs;
 	}
 	
-	
+	/**
+	 * Hjerte til LærerGrensesnitt, denne kjører alt til kontroll av inputer og 
+	 * Setter opp tabel oversikten for brukern samtidig
+	 */
 	private void nyttSporsmal() throws Exception {
+		++antsp;
+		String kurset = (String)comboBoxkursnavn.getItemAt(comboBoxkursnavn.getSelectedIndex());
 		String evuNavn = textFieldevalueringsnavn.getText();
-		String sporsmal = textFieldspørsmål.getText();
+		String sporsmal = textFieldsporsmal.getText();
+		String startTid = textField.getText();
+		java.time.format.DateTimeFormatter formatter = java.time.format.DateTimeFormatter.ofPattern("yyyy-MM-dd");
+		java.time.LocalDate startTidSQL = java.time.LocalDate.parse(startTid, formatter);
+		java.sql.Date sqlDateStart = java.sql.Date.valueOf(startTidSQL);
+		String slutTid = textField_1.getText();
+		java.time.LocalDate slutTidSQL = java.time.LocalDate.parse(slutTid, formatter);
+		java.sql.Date sqlDateSlut = java.sql.Date.valueOf(slutTidSQL);
 		String alt1 = textFieldsvar1.getText();
+		//Sjekker om Alternative svarene er tome, vis de er det så setter vi dem til NULL
+		if (textFieldsvar1.getText().trim().isEmpty()) {
+		    alt1 = null;
+		}
 		String alt2 = textFieldsvar2.getText();
+		if (textFieldsvar2.getText().trim().isEmpty()) {
+		    alt2 = null;
+		}
 		String alt3 = textFieldsvar3.getText();
-		//Grensesnitt.regSpormal(evuNavn, sporsmal, alt1, alt2, alt3);
+		if (textFieldsvar3.getText().trim().isEmpty()) {
+		    alt3 = null;
+		}
+		String alt4 = textFieldsvar4.getText();
+		if (textFieldsvar4.getText().trim().isEmpty()) {
+		    alt4 = null;
+		}
+		String alt5 = textFieldsvar5.getText();
+		if (textFieldsvar5.getText().trim().isEmpty()) {
+		    alt5 = null;
+		}
+		kontroll.nyttSporsmal(antsp, kurset, evuNavn, sporsmal, sqlDateStart, sqlDateSlut, alt1, alt2, alt3, alt4, alt5);
+		
+		Object[] rad = {sporsmal, alt1, alt2, alt3, alt4, alt5};
+		
+		innhold.insertRow(rader, rad);
+		rader++;
+		tømFelt();
 	}
+	
 
-	public static LærerGrensesnitt getInstance() {
-		// TODO Auto-generated method stub
-		return null;
+	/**
+	 * Tømer fletene for spørsmål og svaralternative for å gjøre dem klare til 
+	 * å mota et nytt spørsmål
+	 */
+	private void tømFelt() {
+		textFieldsporsmal.setText("");
+		textFieldsvar1.setText("");
+		textFieldsvar2.setText("");
+		textFieldsvar3.setText("");
+		textFieldsvar4.setText("");
+		textFieldsvar5.setText("");
+		
 	}
 }
