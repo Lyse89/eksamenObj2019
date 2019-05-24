@@ -172,14 +172,6 @@ public class LærerGrensesnitt extends JDialog  {
 		btnNesteSprml.setBounds(470, 292, 140, 23);
 		panel_2.add(btnNesteSprml);
 		
-		JButton btnAvbryt = new JButton("Avbryt");
-		btnAvbryt.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				dispose();
-			}
-		});
-		btnAvbryt.setBounds(318, 292, 140, 23);
-		panel_2.add(btnAvbryt);
 		
 		JLabel lblsvar4 = new JLabel("Svaralternativ 4:");
 		lblsvar4.setBounds(10, 231, 165, 16);
@@ -218,11 +210,13 @@ public class LærerGrensesnitt extends JDialog  {
 		scrollPane.setBounds(24, 437, 622, 151);
 		panel.add(scrollPane);
 		
+		//tabell for spørsmål, fyller inn nytt spørsmål hver gang et nytt blir lagt
 		innhold = new DefaultTableModel(defaulttable, kolonnenavn);
 		sporetabell = new JTable(innhold);
 		sporerulling = new JScrollPane(sporetabell);
 		scrollPane.setViewportView(sporetabell);
 		
+	
 		JLabel lblDineSprsmlS = new JLabel("Dine sp\u00F8rsm\u00E5l s\u00E5 langt:");
 		lblDineSprsmlS.setBounds(24, 410, 137, 14);
 		panel.add(lblDineSprsmlS);
@@ -336,5 +330,4 @@ public class LærerGrensesnitt extends JDialog  {
 		textFieldsvar5.setText("");
 		
 	}
-	
 }
