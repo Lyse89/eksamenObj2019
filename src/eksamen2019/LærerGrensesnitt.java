@@ -41,8 +41,13 @@ public class LærerGrensesnitt extends JDialog  {
 	DefaultTableModel innhold;
 	JTable sporetabell;
 	JScrollPane sporerulling;
+
 	private final String[] kolonnenavn = {"Sporsmåll:","Alternativ 1:","Alternativ 2","Alternativ 3","Alternativ 4","Alternativ 5"};
 	private final Object[][] defaulttable = new Object[][] {{},{}};
+
+    // rapport panel
+	private RapporteringPanel panel_1 = new RapporteringPanel();
+
 	//antsp er for sjekk om det er første spårsmål i kontroll så du veit om du må registrere Evaulering og Spm
 	int antsp = 0;
 	//rader er for å tell hvor en rad skal inn i tabellen
@@ -71,11 +76,13 @@ public class LærerGrensesnitt extends JDialog  {
 			public void windowOpened(WindowEvent arg0) {
 				try {
 					laglistecombobox();
+					panel_1.fyllCombobox();
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
 			}
 		});
+
 		setBounds(100, 100, 688, 711);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -249,9 +256,7 @@ public class LærerGrensesnitt extends JDialog  {
 			} 
 		});
 		
-		JPanel panel_1 = new JPanel();
 		tabbedPane.addTab("Rapport", null, panel_1, null);
-		panel_1.setLayout(null);
 	
 	}
 	/**
