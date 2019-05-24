@@ -45,6 +45,11 @@ public class LærerGrensesnitt extends JDialog  {
 	private final String[] kolonnenavn = {"Sporsmåll:","Alternativ 1:","Alternativ 2","Alternativ 3","Alternativ 4","Alternativ 5"};
 	private final Object[][] defaulttable = new Object[][] {{},{}};
 
+	// panel 3
+	private JTable table;
+
+
+
     // rapport panel
 	private RapporteringPanel panel_1 = new RapporteringPanel();
 
@@ -257,6 +262,29 @@ public class LærerGrensesnitt extends JDialog  {
 		});
 		
 		tabbedPane.addTab("Rapport", null, panel_1, null);
+		
+		JPanel panel_3 = new JPanel();
+		tabbedPane.addTab("Endre evaluering", null, panel_3);
+		panel_3.setLayout(null);
+		
+	    JLabel lblNewLabel = new JLabel("Velg evalueringen");
+        lblNewLabel.setBounds(10, 11, 103, 14);
+        panel_3.add(lblNewLabel);
+        
+        JComboBox comboBox = new JComboBox();
+        comboBox.setBounds(125, 7, 419, 22);
+        panel_3.add(comboBox);
+        
+        JScrollPane scrollPane_1 = new JScrollPane();
+        scrollPane_1.setBounds(10, 49, 633, 576);
+        panel_3.add(scrollPane_1);
+        
+        table = new JTable();
+        scrollPane_1.setViewportView(table);
+
+        JButton btnNewButton = new JButton("Fyll tabellen");
+        btnNewButton.setBounds(554, 7, 89, 23);
+        panel_3.add(btnNewButton);
 	
 	}
 	/**

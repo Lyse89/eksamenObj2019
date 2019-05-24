@@ -61,7 +61,7 @@ public class Kontroll {
         	throw new Exception("Kan ikke utføre spørringen");
         }
         return resultat;      
-        }
+	}
     
     
     
@@ -268,5 +268,75 @@ public class Kontroll {
 		}
 	}
 
+	// ------------------------------------------------------------------------------------
+	// metoder for rapport-jpanel----------------------------------------------------------
+	// ------------------------------------------------------------------------------------
+
+	// metoder for 
+
+    public ResultSet hentAlternativer(Object CurrentSpørsmål) throws Exception {
+        ResultSet resultat = null;
+        try {
+			String sqlSetning = "SELECT tblalternativ.altTekst FROM tblalternativ, tblsporsmal WHERE tblsporsmal.spmTekst LIKE " + "'" + CurrentSpørsmål + "'" + "AND tblalternativ.altSpmId = tblsporsmal.spmId";
+        	Statement utsagn = forbindelse.createStatement();
+        	resultat = utsagn.executeQuery(sqlSetning);
+        }catch(Exception e){
+        	throw new Exception("Kan ikke utføre spørringen");
+        }
+        return resultat;      
+	}
+    
+    public ResultSet hentAlternativerID(String radiotekst) throws Exception {
+        ResultSet resultat = null;
+        try {
+			String sqlSetning = "SELECT altID FROM tblalternativ WHERE altTekst =" + "'" + radiotekst + "'";
+        	Statement utsagn = forbindelse.createStatement();
+        	resultat = utsagn.executeQuery(sqlSetning);
+        }catch(Exception e){
+        	throw new Exception("Kan ikke utføre spørringen");
+        }
+        return resultat;      
+	}
+    public boolean ferdigSvar(String studentID, String Altidentitet) throws Exception {
+    	boolean resultat;
+    	try {
+    		String sqlSetning = "INSERT INTO tblsvar VALUES("+ studentID + "," + Altidentitet + ")";
+    		Statement utsagn = forbindelse.createStatement();
+    		resultat = utsagn.execute(sqlSetning);
+    		
+    	}catch(Exception e1) {
+    		throw new Exception ("Kan ikke utføre spørringen");
+    	}
+    	return resultat;
+    }
+
+	public boolean logInn(String brukernavn, String passord) throws Exception {
+		ResultSet resultat = null;
+		boolean godkjent = false;
+		try {
+				String sqlSetning = "SELECT studId FROM tblstudent WHERE studNavn = " + "'" + brukernavn + "'" + " AND studPassord = " + "'" + passord + "'" + ";";
+				Statement utsagn = forbindelse.createStatement();
+				resultat = utsagn.executeQuery(sqlSetning);
+				if (!resultat.next()){
+					JOptionPane.showMessageDialog(null, "Brukernavn og passord er feil");
+				} else {godkjent = true;}
+				
+	
+		} catch(Exception e) {
+				throw new Exception("kan ikke utføre spørringen" + e);
+			}
+		return godkjent;
+	}
+    
+	public ResultSet hentStudentID (String brukernavn, String passord) throws Exception {
+		ResultSet resultat = null;
+		String sqlSetning = "SELECT studId FROM tblstudent WHERE studNavn = " + "'" + brukernavn + "'" + " AND studPassord = " + "'" + passord + "'" + ";";
+		Statement utsagn = forbindelse.createStatement();
+		resultat = utsagn.executeQuery(sqlSetning);
+		return resultat;
+	}
+    
+    
+    
 	// ------------------------------------------------------------------------------------
 }

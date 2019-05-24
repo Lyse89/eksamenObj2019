@@ -8,18 +8,22 @@ import javax.swing.JDialog;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import java.awt.Font;
 import java.awt.event.ActionListener;
+import java.sql.ResultSet;
 import java.awt.event.ActionEvent;
 import javax.swing.border.TitledBorder;
 
 public class StudentGrensesnitt extends JDialog {
+
 	private Kontroll kontroll = Kontroll.getInstance();
 	private final JPanel contentPanel = new JPanel();
 	private JTextField Brukernavnlogintextfield;
 	private JTextField Passordlogintextfield;
 
+	
 
 	/**
 	 * Launch the application.
@@ -33,6 +37,9 @@ public class StudentGrensesnitt extends JDialog {
 			e.printStackTrace();
 		}
 	}
+
+	
+
 
 	/**
 	 * Create the dialog.
@@ -49,14 +56,15 @@ public class StudentGrensesnitt extends JDialog {
 		panel.setBounds(10, 11, 380, 112);
 		contentPanel.add(panel);
 		panel.setLayout(null);
+		{
+			JLabel lblBrukernavn = new JLabel("Brukernavn:");
+			lblBrukernavn.setBounds(6, 19, 139, 16);
+			panel.add(lblBrukernavn);
 		
-		JLabel lblBrukernavn = new JLabel("Brukernavn:");
-		lblBrukernavn.setBounds(6, 19, 139, 16);
-		panel.add(lblBrukernavn);
-		
-		JLabel lblPassord = new JLabel("Passord:");
-		lblPassord.setBounds(6, 48, 139, 16);
-		panel.add(lblPassord);
+			JLabel lblPassord = new JLabel("Passord:");
+			lblPassord.setBounds(6, 48, 139, 16);
+			panel.add(lblPassord);
+		}	
 		
 		Brukernavnlogintextfield = new JTextField();
 		Brukernavnlogintextfield.setBounds(157, 16, 217, 22);
@@ -74,22 +82,46 @@ public class StudentGrensesnitt extends JDialog {
 		panel.add(Loginknapp);
 		Loginknapp.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				StudentEvaluering newWindow = new StudentEvaluering();
-				newWindow.setVisible(true);
-				dispose();
+				
+				try {
+					String brukernavn = Brukernavnlogintextfield.getText();
+					String passord = Passordlogintextfield.getText();
+					logInnSjekk(brukernavn, passord);
+					ResultSet studentid = getstudID(brukernavn, passord);
+					studentid.next();
+					String studentID = studentid.getString(1);
+					JOptionPane.showMessageDialog(null, "Din ID er: " + studentID);
+					dispose();
+					
+				} catch (Exception e1) {JOptionPane.showMessageDialog(null,  e1.getMessage());}
 			}
+
 		});
 		
 		JButton logintilbakeknapp = new JButton("Tilbake");
 		logintilbakeknapp.setBounds(157, 80, 97, 25);
 		panel.add(logintilbakeknapp);
+		
 		logintilbakeknapp.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				dispose();
 			}
 		});
-		{
+	}
 
+		
+		public void logInnSjekk(String brukernavn, String passord) throws Exception {
+			boolean godkjent = kontroll.logInn(brukernavn, passord);
+			try {
+				StudentEvaluering newWindow = new StudentEvaluering();
+				if (godkjent == true) {newWindow.setVisible(true);}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		
+		public ResultSet getstudID(String brukernavn, String passord) throws Exception {
+			ResultSet studID = kontroll.hentStudentID(brukernavn, passord);
+			return studID;
 		}
 	}
-}
